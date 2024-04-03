@@ -1,0 +1,57 @@
+#!/usr/bin/env node
+
+import inquirer from "inquirer"
+import chalk from "chalk"
+
+let todos = []
+let condition = true
+
+while(condition){
+
+    let userAction =await inquirer.prompt([
+        {
+        name : "action",
+        type : "list",
+        message : chalk.yellow("What do you want to do?"),
+        choices : ["add", "delete", "update"]
+        }
+    ])
+
+    if(userAction.action == "add"){
+        let addTask =await inquirer.prompt([{
+            name : "Add",
+            type : "input",
+            message : "What would you like to add in your todos?"
+        },
+        {
+            name : "addMore",
+            type : "confirm",
+            message : chalk.green("Do you want to add more?"),
+            default : "true",
+            }
+    ])
+    if(userAction.toDoWork == ''){
+        console.log(chalk.red("To do list should not be empty. Please enter a value"));
+    }
+        todos.push(addTask.Add)
+
+        condition =  addTask.addMore
+
+    }
+    // if(userAction.action == "delete"){
+    //     let deleteTask =await inquirer.prompt({
+    //         name : "Delete",
+    //         type : "list",
+    //         message : "What would you like to delete in your todos?",
+    //         choices : todos
+    //     })        
+    // }
+
+
+
+    console.log("Your To-Do list:");
+    
+    for (let i = 0; i < todos.length; i++) {
+        console.log(chalk.magentaBright(`${i + 1}. ${todos[i]}`));
+    }
+}
